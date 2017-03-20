@@ -1,0 +1,737 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api-documentation for
+    <a
+
+        href="https://github.com/kaizhu256/node-apidoc-lite"
+
+    >npmdoc (v2017.3.16)</a>
+</h1>
+<h4>this zero-dependency package will auto-generate documentation for your npm-package with zero-config</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.npmdoc">module npmdoc</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.apidocCreate">
+            function <span class="apidocSignatureSpan">npmdoc.</span>apidocCreate
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.apidocModuleDictAdd">
+            function <span class="apidocSignatureSpan">npmdoc.</span>apidocModuleDictAdd
+            <span class="apidocSignatureSpan">(options, moduleDict)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.assert">
+            function <span class="apidocSignatureSpan">npmdoc.</span>assert
+            <span class="apidocSignatureSpan">(passed, message)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.moduleDirname">
+            function <span class="apidocSignatureSpan">npmdoc.</span>moduleDirname
+            <span class="apidocSignatureSpan">(module)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.nop">
+            function <span class="apidocSignatureSpan">npmdoc.</span>nop
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.objectSetDefault">
+            function <span class="apidocSignatureSpan">npmdoc.</span>objectSetDefault
+            <span class="apidocSignatureSpan">(arg, defaults, depth)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.stringHtmlSafe">
+            function <span class="apidocSignatureSpan">npmdoc.</span>stringHtmlSafe
+            <span class="apidocSignatureSpan">(text)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.npmdoc.templateRender">
+            function <span class="apidocSignatureSpan">npmdoc.</span>templateRender
+            <span class="apidocSignatureSpan">(template, dict)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npmdoc.</span>apidoc</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">npmdoc.</span>local</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">npmdoc.</span>__dirname</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">npmdoc.</span>templateApidocHtml</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">npmdoc.</span>templateApidocMd</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.npmdoc" id="apidoc.module.npmdoc">module npmdoc</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.apidocCreate" id="apidoc.element.npmdoc.apidocCreate">
+        function <span class="apidocSignatureSpan">npmdoc.</span>apidocCreate
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">apidocCreate = function (options) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will create the apidoc from options.dir
+ */
+</span>    var elementCreate, module, moduleMain, readExample, tmp, trimLeft;
+    elementCreate = function (module, prefix, key) {
+    /*
+     * this function will create the apidoc-element in the given module
+     */
+        var element;
+        element = {};
+        element.moduleName = prefix.split(&#x27;.&#x27;);
+        // handle case where module is a function
+        if (element.moduleName.slice(-1)[0] === key) {
+            element.moduleName.pop();
+        }
+        element.moduleName = element.moduleName.join(&#x27;.&#x27;);
+        element.id = encodeURIComponent(&#x27;apidoc.element.&#x27; + prefix + &#x27;.&#x27; + key);
+        element.typeof = typeof module[key];
+        element.name = (element.typeof + &#x27; &#x3c;span class=&#x22;apidocSignatureSpan&#x22;&#x3e;&#x27; +
+            element.moduleName + &#x27;.&#x3c;/span&#x3e;&#x27; + key)
+            // handle case where module is a function
+            .replace(&#x27;&#x3e;.&#x3c;&#x27;, &#x27;&#x27;);
+        if (element.typeof !== &#x27;function&#x27;) {
+            return element;
+        }
+        // init source
+        element.source = trimLeft(module[key].toString());
+        if (element.source.length &#x3e; 4096) {
+            element.source = element.source.slice(0, 4096).trimRight() + &#x27; ...&#x27;;
+        }
+        element.source = (options.template === local.templateApidocHtml
+            ? local.stringHtmlSafe(element.source)
+            : element.source.replace((/`/g), &#x27;_&#x27;))
+            .replace((/\([\S\s]*?\)/), function (match0) {
+                // init signature
+                element.signature = match0
+                    .replace((/ *?\/\*[\S\s]*?\*\/ */g), &#x27;&#x27;)
+                    .replace((/,/g), &#x27;, &#x27;)
+                    .replace((/\s+/g), &#x27; &#x27;);
+                return element.signature;
+            })
+            .replace(
+                (/( *?\/\*[\S\s]*?\*\/\n)/),
+                &#x27;&#x3c;span class=&#x22;apidocCodeCommentSpan&#x22;&#x3e;$1&#x3c;/span&#x3e;&#x27;
+            )
+            .replace((/^function \(/), key + &#x27; = function (&#x27;);
+        // init example
+        options.exampleList.some(function (example) {
+            example.replace(
+                new RegExp(&#x27;((?:\n.*?){8}\\.)(&#x27; + key + &#x27;)(\\((?:.*?\n){8})&#x27;),
+                function (match0, match1, match2, match3) {
+                    element.example = &#x27;...&#x27; + trimLeft(
+                        options.template === local.templateApidocHtml
+                            ?  local.stringHtmlSafe(match1) +
+                                &#x27;&#x3c;span class=&#x22;apidocCodeKeywordSpan&#x22;&#x3e;&#x27; +
+                                local.stringHtmlSafe(match2) +
+                                &#x27;&#x3c;/span&#x3e;&#x27; +
+                                local.stringHtmlSafe(match3)
+                            : match0.replace((/`/g), &#x22;&#x27;&#x22;)
+                    ).trimRight() + &#x27;\n...&#x27;;
+                }
+            );
+            return element.example;
+        });
+        element.example = element.example || &#x27;n/a&#x27;;
+        return element;
+    };
+    readExample = function (file) {
+    /*
+     * this function will read the example from the given file
+     */
+        try {
+            return (&#x27;\n\n\n\n\n\n\n\n&#x27; +
+                local.fs.readFileSync(local.path.resolve(options.dir, file), &#x27;utf8&#x27;) +
+                &#x27;\n\n\n\n\n\n\n\n&#x27;).replace((/\r\n*/g), &#x27;\n&#x27;);
+        } catch (errorCaught) {
+            return &#x27;&#x27;;
+        }
+    };
+    trimLeft = function (text) {
+    /*
+     * this function will normalize the whitespace around the text
+     */
+        var whitespace;
+        whitespace = &#x27;&#x27;;
+        text.trim().replace((/^ */gm), function (match0) {
+            if (!whitespace || match0.length &#x3c; whitespace.length) {
+                whitespace = match0;
+            }
+        });
+        text = text.replace(new RegExp(&#x27;^&#x27; + whitespace, &#x27;gm&#x27;), &#x27;&#x27;);
+        // enforce 128 character column limit
+        while ((/^.{128}[^\\\n]/m).test(text)) {
+            text = text.replace((/^(.{128})([^\\\n]+)/gm), &#x27;$1\\\n$2&#x27;);
+        }
+        return text;
+    };
+    // init options
+    options.dir = local.moduleDirname(options.dir);
+    local.objectSetDefault(options, {
+        packageJson: JSON.parse(readExample(&#x27;package.json ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    local.fs = require(&#x27;fs&#x27;);
+    local.path = require(&#x27;path&#x27;);
+    // run the cli
+    if (module !== require.main || local.global.utility2_rollup) {
+        break;
+    }
+    // jslint files
+    process.stdout.write(local.<span class="apidocCodeKeywordSpan">apidocCreate</span>({
+        dir: process.argv[2],
+        template: process.argv[3] === &#x27;--markdown&#x27;
+            ? local.templateApidocMd
+            : local.templateApidocHtml
+    }));
+    break;
+}
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.apidocModuleDictAdd" id="apidoc.element.npmdoc.apidocModuleDictAdd">
+        function <span class="apidocSignatureSpan">npmdoc.</span>apidocModuleDictAdd
+        <span class="apidocSignatureSpan">(options, moduleDict)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">apidocModuleDictAdd = function (options, moduleDict) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will add the modules in moduleDict to options.moduleDict
+ */
+</span>    var isModule, tmp;
+    [&#x27;child&#x27;, &#x27;prototype&#x27;, &#x27;grandchild&#x27;, &#x27;prototype&#x27;].forEach(function (element) {
+        Object.keys(moduleDict).sort().forEach(function (prefix) {
+            if (!(/^\w[\w\-.]*?$/).test(prefix)) {
+                return;
+            }
+            Object.keys(moduleDict[prefix]).forEach(function (key) {
+                if (!(/^\w[\w\-.]*?$/).test(key)) {
+                    return;
+                }
+                // bug-workaround - buggy electron accessors
+                try {
+                    tmp = element === &#x27;prototype&#x27;
+                        ? {
+                            module: moduleDict[prefix][key].prototype,
+                            name: prefix + &#x27;.&#x27; + key + &#x27;.prototype&#x27;
+                        }
+                        : {
+                            module: moduleDict[prefix][key],
+                            name: prefix + &#x27;.&#x27; + key
+                        };
+                    if (!tmp.module ||
+                            !(typeof tmp.module === &#x27;function&#x27; ||
+                            typeof tmp.module === &#x27;object&#x27;) ||
+                            options.moduleDict[tmp.name] ||
+                            options.circularList.indexOf(tmp.module) &#x3e;= 0) {
+                        return;
+                    }
+                    isModule = [
+                        tmp.module,
+                        tmp.module.prototype
+                    ].some(function (dict) {
+                        return Object.keys(dict || {}).some(function (key) {
+                            try {
+                                return typeof dict[key] === &#x27;function&#x27;;
+                            } catch (ignore) {
+                            }
+                        });
+                    });
+                    if (!isModule) {
+                        return;
+                    }
+                    options.circularList.push(tmp.module);
+                    options.moduleDict[tmp.name] = tmp.module;
+                } catch (ignore) {
+                }
+            });
+        });
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+options.circularList = [];
+tmp.forEach(function (element) {
+    if (options.circularList.indexOf(element) &#x3c; 0) {
+        options.circularList.push(element);
+    }
+});
+// init moduleDict child
+local.<span class="apidocCodeKeywordSpan">apidocModuleDictAdd</span>(options, options.moduleDict);
+// init moduleDict lib
+(function () {
+    // optimization - isolate try-catch block
+    try {
+        options.libFileList = options.libFileList ||
+            local.fs.readdirSync(options.dir + &#x27;/lib&#x27;)
+            .sort()
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.assert" id="apidoc.element.npmdoc.assert">
+        function <span class="apidocSignatureSpan">npmdoc.</span>assert
+        <span class="apidocSignatureSpan">(passed, message)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">assert = function (passed, message) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will throw the error message if passed is falsey
+ */
+</span>    var error;
+    if (passed) {
+        return;
+    }
+    error = message &#x26;&#x26; message.message
+        // if message is an error-object, then leave it as is
+        ? message
+        : new Error(typeof message === &#x27;string&#x27;
+            // if message is a string, then leave it as is
+            ? message
+            // else JSON.stringify message
+            : JSON.stringify(message));
+    throw error;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.moduleDirname" id="apidoc.element.npmdoc.moduleDirname">
+        function <span class="apidocSignatureSpan">npmdoc.</span>moduleDirname
+        <span class="apidocSignatureSpan">(module)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">moduleDirname = function (module) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will return the __dirname of the module
+ */
+</span>    var result;
+    if (!module || module.indexOf(&#x27;/&#x27;) &#x3e;= 0 || module === &#x27;.&#x27;) {
+        return require(&#x27;path&#x27;).resolve(process.cwd(), module || &#x27;&#x27;);
+    }
+    try {
+        require(process.cwd() + &#x27;/node_modules/&#x27; + module);
+    } catch (errorCaught) {
+        try {
+            require(module);
+        } catch (ignore) {
+        }
+    }
+    [
+        new RegExp(&#x27;(.*?/&#x27; + module + &#x27;)\\b&#x27;),
+        new RegExp(&#x27;(.*?/&#x27; + module + &#x27;)/[^/].*?$&#x27;)
+    ].some(function (rgx) {
+        return Object.keys(require.cache).some(function (key) {
+            result = rgx.exec(key);
+            result = result &#x26;&#x26; result[1];
+            return result;
+        });
+    });
+    return result || &#x27;&#x27;;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    // enforce 128 character column limit
+    while ((/^.{128}[^\\\n]/m).test(text)) {
+        text = text.replace((/^(.{128})([^\\\n]+)/gm), &#x27;$1\\\n$2&#x27;);
+    }
+    return text;
+};
+// init options
+options.dir = local.<span class="apidocCodeKeywordSpan">moduleDirname</span>(options.dir);
+local.objectSetDefault(options, {
+    packageJson: JSON.parse(readExample(&#x27;package.json&#x27;))
+});
+local.objectSetDefault(options, { env: {
+    npm_package_homepage: options.packageJson.homepage,
+    npm_package_name: options.packageJson.name,
+    npm_package_version: options.packageJson.version
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.nop" id="apidoc.element.npmdoc.nop">
+        function <span class="apidocSignatureSpan">npmdoc.</span>nop
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">nop = function () {
+<span class="apidocCodeCommentSpan">/*
+ * this function will do nothing
+ */
+</span>    return;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+switch (local.modeJs) {
+
+
+
+// run browser js-env code - post-init
+case &#x27;browser&#x27;:
+    // run tests
+    local.<span class="apidocCodeKeywordSpan">nop</span>(local.modeTest &#x26;&#x26;
+        document.querySelector(&#x27;#testRunButton1&#x27;) &#x26;&#x26;
+        document.querySelector(&#x27;#testRunButton1&#x27;).click());
+    break;
+
+
+
+// run node js-env code - post-init
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.objectSetDefault" id="apidoc.element.npmdoc.objectSetDefault">
+        function <span class="apidocSignatureSpan">npmdoc.</span>objectSetDefault
+        <span class="apidocSignatureSpan">(arg, defaults, depth)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">objectSetDefault = function (arg, defaults, depth) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will recursively set defaults for undefined-items in the arg
+ */
+</span>    arg = arg || {};
+    defaults = defaults || {};
+    Object.keys(defaults).forEach(function (key) {
+        var arg2, defaults2;
+        arg2 = arg[key];
+        // handle misbehaving getter
+        try {
+            defaults2 = defaults[key];
+        } catch (ignore) {
+        }
+        if (defaults2 === undefined) {
+            return;
+        }
+        // init arg[key] to default value defaults[key]
+        if (!arg2) {
+            arg[key] = defaults2;
+            return;
+        }
+        // if arg2 and defaults2 are both non-null and non-array objects,
+        // then recurse with arg2 and defaults2
+        if (depth &#x3e; 1 &#x26;&#x26;
+                // arg2 is a non-null and non-array object
+                arg2 &#x26;&#x26;
+                typeof arg2 === &#x27;object&#x27; &#x26;&#x26;
+                !Array.isArray(arg2) &#x26;&#x26;
+                // defaults2 is a non-null and non-array object
+                defaults2 &#x26;&#x26;
+                typeof defaults2 === &#x27;object&#x27; &#x26;&#x26;
+                !Array.isArray(defaults2)) {
+            // recurse
+            local.objectSetDefault(arg2, defaults2, depth - 1);
+        }
+    });
+    return arg;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+                typeof arg2 === &#x27;object&#x27; &#x26;&#x26;
+                !Array.isArray(arg2) &#x26;&#x26;
+                // defaults2 is a non-null and non-array object
+                defaults2 &#x26;&#x26;
+                typeof defaults2 === &#x27;object&#x27; &#x26;&#x26;
+                !Array.isArray(defaults2)) {
+            // recurse
+            local.<span class="apidocCodeKeywordSpan">objectSetDefault</span>(arg2, defaults2, depth - 1);
+        }
+    });
+    return arg;
+};
+
+local.stringHtmlSafe = function (text) {
+/*
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.stringHtmlSafe" id="apidoc.element.npmdoc.stringHtmlSafe">
+        function <span class="apidocSignatureSpan">npmdoc.</span>stringHtmlSafe
+        <span class="apidocSignatureSpan">(text)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">stringHtmlSafe = function (text) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will make the text html-safe
+ */
+</span>    // new RegExp(&#x27;[&#x27; + &#x27;&#x22;&#x26;\&#x27;&#x3c;&#x3e;&#x27;.split(&#x27;&#x27;).sort().join(&#x27;&#x27;) + &#x27;]&#x27;, &#x27;g&#x27;)
+    return text.replace((/[&#x22;&#x26;&#x27;&#x3c;&#x3e;]/g), function (match0) {
+        return &#x27;&#x26;#x&#x27; + match0.charCodeAt(0).toString(16) + &#x27;;&#x27;;
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+case &#x27;decodeURIComponent&#x27;:
+    value = decodeURIComponent(value);
+    break;
+case &#x27;encodeURIComponent&#x27;:
+    value = encodeURIComponent(value);
+    break;
+case &#x27;htmlSafe&#x27;:
+    value = local.<span class="apidocCodeKeywordSpan">stringHtmlSafe</span>(String(value));
+    break;
+case &#x27;jsonStringify&#x27;:
+    value = JSON.stringify(value);
+    break;
+default:
+    value = value[arg]();
+    break;
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.npmdoc.templateRender" id="apidoc.element.npmdoc.templateRender">
+        function <span class="apidocSignatureSpan">npmdoc.</span>templateRender
+        <span class="apidocSignatureSpan">(template, dict)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">templateRender = function (template, dict) {
+<span class="apidocCodeCommentSpan">/*
+ * this function will render the template with the given dict
+ */
+</span>    var argList, getValue, match, renderPartial, rgx, value;
+    dict = dict || {};
+    getValue = function (key) {
+        argList = key.split(&#x27; &#x27;);
+        value = dict;
+        // iteratively lookup nested values in the dict
+        argList[0].split(&#x27;.&#x27;).forEach(function (key) {
+            value = value &#x26;&#x26; value[key];
+        });
+        return value;
+    };
+    renderPartial = function (match0, helper, key, partial) {
+        switch (helper) {
+        case &#x27;each&#x27;:
+            value = getValue(key);
+            return Array.isArray(value)
+                ? value.map(function (dict) {
+                    // recurse with partial
+                    return local.templateRender(partial, dict);
+                }).join(&#x27;&#x27;)
+                : &#x27;&#x27;;
+        case &#x27;if&#x27;:
+            partial = partial.split(&#x27;{{#unless &#x27; + key + &#x27;}}&#x27;);
+            partial = getValue(key)
+                ? partial[0]
+                // handle &#x27;unless&#x27; case
+                : partial.slice(1).join(&#x27;{{#unless &#x27; + key + &#x27;}}&#x27;);
+            // recurse with partial
+            return local.templateRender(partial, dict);
+        case &#x27;unless&#x27;:
+            return getValue(key)
+                ? &#x27;&#x27;
+                // recurse with partial
+                : local.templateRender(partial, dict);
+        default:
+            // recurse with partial
+            return match0[0] + local.templateRender(match0.slice(1), dict);
+        }
+    };
+    // render partials
+    rgx = (/\{\{#(\w+) ([^}]+?)\}\}/g);
+    template = template || &#x27;&#x27;;
+    for (match = rgx.exec(template); match; match = rgx.exec(template)) {
+        rgx.lastIndex += 1 - match[0].length;
+        template = template.replace(
+            new RegExp(&#x27;\\{\\{#(&#x27; + match[1] + &#x27;) (&#x27; + match[2] +
+                &#x27;)\\}\\}([\\S\\s]*?)\\{\\{/&#x27; + match[1] + &#x27; &#x27; + match[2] +
+                &#x27;\\}\\}&#x27;),
+            renderPartial
+        );
+    }
+    // search for keys in the template
+    return template.replace((/\{\{[^}]+?\}\}/g), function (match0) {
+        getValue(match0.slice(2, -2));
+        if (value === undefined) {
+            return match0;
+        }
+        argList.slice(1).forEach(function (arg) {
+            switch (arg) {
+            case &#x27;decodeURIComponent&#x27;:
+                value = decodeURIComponent(value);
+                break;
+            case &#x27;encodeURIComponent&#x27;:
+                value = encodeURIComponent(value);
+                break;
+            case &#x27;htmlSafe&#x27;:
+                value = local.stringHtmlSafe(String(value));
+                break;
+            case &#x27;jsonStringify&#x27;:
+                value = JSON.stringify(value);
+                break;
+            default:
+                value = value[arg]();
+                break;
+            }
+        });
+        return String(value);
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+            renderPartial = function (match0, helper, key, partial) {
+switch (helper) {
+case &#x27;each&#x27;:
+    value = getValue(key);
+    return Array.isArray(value)
+        ? value.map(function (dict) {
+            // recurse with partial
+            return local.<span class="apidocCodeKeywordSpan">templateRender</span>(partial, dict);
+        }).join(&#x27;&#x27;)
+        : &#x27;&#x27;;
+case &#x27;if&#x27;:
+    partial = partial.split(&#x27;{{#unless &#x27; + key + &#x27;}}&#x27;);
+    partial = getValue(key)
+        ? partial[0]
+        // handle &#x27;unless&#x27; case
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
