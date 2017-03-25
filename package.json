@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"npmdoc",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "npmdoc",
+    "description": "api documentation for [npmdoc (v2017.3.16)](https://github.com/kaizhu256/node-apidoc-lite) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-npmdoc.svg)](https://travis-ci.org/npmdoc/node-npmdoc-npmdoc)",
     "devDependencies": {
-        "npmdoc": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "npmdoc": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-npmdoc",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-npmdoc",
+    "keywords": [
+        "documentation",
+        "npmdoc"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_npmdoc.js",
+    "name": "npmdoc-npmdoc",
+    "nameAlias": "npmdoc_npmdoc",
+    "nameOriginal": "npmdoc-npmdoc",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-npmdoc.git"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
-    "version": "0.0.1"
+    "version": "0.0.2"
 }
