@@ -1,11 +1,13 @@
-# api documentation for  [npmdoc (v2017.3.16)](https://github.com/kaizhu256/node-apidoc-lite)  [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-npmdoc.svg)](https://travis-ci.org/npmdoc/node-npmdoc-npmdoc)
+# api documentation for  [npmdoc (v2017.3.16)](https://github.com/kaizhu256/node-apidoc-lite)  [![npm package](https://img.shields.io/npm/v/npmdoc-npmdoc.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-npmdoc) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-npmdoc.svg)](https://travis-ci.org/npmdoc/node-npmdoc-npmdoc)
 #### this zero-dependency package will auto-generate documentation for your npm-package with zero-config
 
 [![NPM](https://nodei.co/npm/npmdoc.png?downloads=true)](https://www.npmjs.com/package/npmdoc)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-npmdoc/build/screen-capture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-npmdoc_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-npmdoc/build..beta..travis-ci.org/apidoc.html)
+[![apidoc](https://npmdoc.github.io/node-npmdoc-npmdoc/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-npmdoc_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-npmdoc/build/apidoc.html)
 
-![package-listing](https://npmdoc.github.io/node-npmdoc-npmdoc/build/screen-capture.npmPackageListing.svg)
+![npmPackageListing](https://npmdoc.github.io/node-npmdoc-npmdoc/build/screenCapture.npmPackageListing.svg)
+
+![npmPackageDependencyTree](https://npmdoc.github.io/node-npmdoc-npmdoc/build/screenCapture.npmPackageDependencyTree.svg)
 
 
 
